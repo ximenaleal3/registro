@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoga con Ximena · Reservas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#efe3d8;--card:#f8f1ea;--terra:#b8715c;--brown:#7a4a33;--olive:#8a8677;--ink:#4a2e20;--line:#d9c6b6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 'Work Sans',sans-serif}
+main{max-width:560px;margin:0 auto;padding:24px 16px 64px}
+h1,h2{font-family:Marcellus,serif;font-weight:400;color:var(--brown);margin:0}
+h1{font-size:30px;text-align:center}
+h2{font-size:22px;margin:28px 0 12px}
+.sub{text-align:center;margin:4px 0 24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.muted{color:var(--olive);font-size:14px}
+button{font:inherit;font-weight:600;border:0;border-radius:999px;padding:10px 18px;background:var(--terra);color:#fff;cursor:pointer}
+button.alt{background:transparent;color:var(--brown);border:1px solid var(--brown)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--brown);outline-offset:2px}
+input{font:inherit;width:100%;padding:12px 14px;margin:6px 0;border:1px solid var(--line);border-radius:12px;background:#fff}
+.tabs{display:flex;gap:8px;margin:20px 0}
+.tabs button{flex:1;background:transparent;color:var(--brown);border:1px solid var(--line)}
+.tabs button.on{background:var(--brown);color:#fff}
+.big{font-family:Marcellus,serif;font-size:44px;color:var(--terra);line-height:1}
+.msg{padding:10px 14px;border-radius:12px;margin:12px 0;background:#fff;border:1px solid var(--terra)}
+.hidden{display:none}
+.tag{font-size:13px;padding:2px 10px;border-radius:999px;background:var(--line)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Yoga con Ximena</h1>
+  <p class="sub muted">Reserva tu clase</p>
+  <div id="msg" class="msg hidden" role="status"></div>
+
+  <section id="auth" class="card hidden">
+    <h2 id="authTitle" style="margin-top:0">Inicia sesión</h2>
+    <input id="name" placeholder="Tu nombre" autocomplete="name" class="hidden">
+    <input id="email" type="email" placeholder="Correo" autocomplete="email">
+    <input id="pass" type="password" placeholder="Contraseña (mínimo 6 caracteres)" autocomplete="current-password">
+    <div class="row" style="margin-top:12px">
+      <button id="authBtn">Entrar</button>
+      <button id="authSwap" class="alt">Crear cuenta</button>
+    </div>
+  </section>
+
+  <section id="app" class="hidden">
+    <div class="row"><span id="hello" class="muted"></span><button id="out" class="alt">Salir</button></div>
+    <div class="tabs">
+      <button id="t1" class="on">Clases</button>
+      <button id="t2">Mi perfil</button>
+    </div>
+    <div id="v1"></div>
+    <div id="v2" class="hidden"></div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+// 1) Pega aquí los datos de tu proyecto (Supabase > Project Settings > API)
+const SUPABASE_URL = 'https://mdjfgkbaillpwwmfvgni.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_Z38ILVrUppisr2Ky2BN-Ww_LBQyBOS6';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const TZ = 'America/Mexico_City';
+const fmt = d => new Date(d).toLocaleString('es-MX', {timeZone: TZ, weekday:'long', day:'numeric', month:'long', hour:'numeric', minute:'2-digit'});
+const STATUS = {booked:'Reservada', cancelled:'Cancelada', late_cancel:'Cancelada tarde (se descontó)', attended:'Asististe', no_show:'No asististe (se descontó)'};
+let signup = false;
+
+function say(t){ const m=$('msg'); m.textContent=t; m.classList.toggle('hidden',!t); if(t) setTimeout(()=>m.classList.add('hidden'),6000); }
+
+function showAuth(){ $('auth').classList.remove('hidden'); $('app').classList.add('hidden'); }
+$('authSwap').onclick = () => {
+  signup = !signup;
+  $('name').classList.toggle('hidden', !signup);
+  $('authTitle').textContent = signup ? 'Crea tu cuenta' : 'Inicia sesión';
+  $('authBtn').textContent = signup ? 'Registrarme' : 'Entrar';
+  $('authSwap').textContent = signup ? 'Ya tengo cuenta' : 'Crear cuenta';
+};
+$('authBtn').onclick = async () => {
+  const email = $('email').value.trim(), password = $('pass').value;
+  const res = signup
+    ? await sb.auth.signUp({email, password, options:{data:{name:$('name').value.trim()}}})
+    : await sb.auth.signInWithPassword({email, password});
+  if (res.error) return say(res.error.message);
+  if (signup && !res.data.session) return say('Cuenta creada. Revisa tu correo para confirmarla y luego inicia sesión.');
+  start();
+};
+$('out').onclick = async () => { await sb.auth.signOut(); showAuth(); };
+$('t1').onclick = () => tab(1); $('t2').onclick = () => tab(2);
+function tab(n){ $('v1').classList.toggle('hidden',n!==1); $('v2').classList.toggle('hidden',n!==2);
+  $('t1').classList.toggle('on',n===1); $('t2').classList.toggle('on',n===2); }
+
+function ics(name, start){
+  const z = d => new Date(d).toISOString().replace(/[-:]|\.\d{3}/g,'');
+  const end = new Date(new Date(start).getTime()+50*60000);
+  const t = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT','DTSTART:'+z(start),'DTEND:'+z(end),
+    'SUMMARY:'+name+' - Yoga con Ximena','LOCATION:Colonia Villa Universitaria','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([t],{type:'text/calendar'})); a.download='clase-yoga.ics'; a.click();
+}
+
+async function start(){
+  const {data:{user}} = await sb.auth.getUser();
+  if(!user) return showAuth();
+  $('auth').classList.add('hidden'); $('app').classList.remove('hidden');
+  const [cls, cr, pk, hist, prof] = await Promise.all([
+    sb.rpc('classes_with_spots'), sb.rpc('my_credits'),
+    sb.from('packages').select('total,expires_at').gt('expires_at', new Date().toISOString()).order('expires_at'),
+    sb.from('bookings').select('id,status,classes(name,starts_at)'),
+    sb.from('profiles').select('name').maybeSingle()
+  ]);
+  if (cls.error) return say('No se pudieron cargar las clases: '+cls.error.message);
+  $('hello').textContent = 'Hola, ' + (prof.data?.name || user.email);
+  const credits = cr.data ?? 0;
+  const classes = cls.data || [];
+
+  $('v1').innerHTML = `<p class="muted">Te quedan <b>${credits}</b> clases. Puedes cancelar hasta 12 h antes; después, la clase se descuenta.</p>` +
+    (classes.length ? classes.map(c => {
+      const left = c.capacity - c.taken, mine = !!c.my_booking;
+      return `<div class="card"><div class="row"><div><b>${esc(c.name)}</b><br><span class="muted">${esc(fmt(c.starts_at))}</span><br>
+        <span class="tag">${left>0?left+' lugares':'Llena'}</span></div>
+        ${mine ? `<div style="display:grid;gap:6px"><button class="alt" data-cancel="${c.my_booking}" data-start="${c.starts_at}">Cancelar</button><button class="alt" data-ics="${c.id}">Agregar a calendario</button></div>`
+               : `<button data-book="${c.id}" ${left<=0||credits<=0?'disabled':''}>Reservar</button>`}</div></div>`;
+    }).join('') : '<p class="muted">Aún no hay clases publicadas.</p>');
+
+  const hs = (hist.data||[]).filter(h=>h.classes).sort((a,b)=>new Date(b.classes.starts_at)-new Date(a.classes.starts_at));
+  $('v2').innerHTML = `<div class="card"><div class="muted">Clases disponibles</div><div class="big">${credits}</div>
+    ${(pk.data||[]).map(p=>`<div class="muted">Paquete de ${p.total} · vence ${esc(new Date(p.expires_at).toLocaleDateString('es-MX',{timeZone:TZ,day:'numeric',month:'long'}))}</div>`).join('') || '<div class="muted">Sin paquete vigente. Escríbele a Ximena por WhatsApp.</div>'}</div>
+    <h2>Mis clases</h2>` + (hs.length ? hs.map(h=>`<div class="card"><b>${esc(h.classes.name)}</b><br>
+    <span class="muted">${esc(fmt(h.classes.starts_at))} · ${STATUS[h.status]}</span></div>`).join('') : '<p class="muted">Todavía no tienes clases.</p>');
+
+  document.querySelectorAll('[data-book]').forEach(b => b.onclick = async () => {
+    b.disabled = true;
+    const {error} = await sb.rpc('book_class', {p_class: b.dataset.book});
+    say(error ? error.message : 'Clase reservada ✓'); start();
+  });
+  document.querySelectorAll('[data-cancel]').forEach(b => b.onclick = async () => {
+    const late = new Date(b.dataset.start) - Date.now() < 12*3600*1000;
+    if (!confirm(late ? 'Faltan menos de 12 horas: si cancelas, la clase SE DESCUENTA de tu paquete. ¿Cancelar de todos modos?' : '¿Cancelar tu reserva? Se te devuelve la clase.')) return;
+    const {data, error} = await sb.rpc('cancel_booking', {p_booking: b.dataset.cancel});
+    say(error ? error.message : data==='late_cancel' ? 'Cancelada. Por ser con menos de 12 h, se descontó.' : 'Cancelada. Se te devolvió la clase.'); start();
+  });
+  document.querySelectorAll('[data-ics]').forEach(b => b.onclick = () => {
+    const c = classes.find(x=>x.id===b.dataset.ics); ics(c.name, c.starts_at);
+  });
+}
+start();
+</script>
+</body>
+</html>
