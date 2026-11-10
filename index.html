@@ -111,35 +111,37 @@ async function start(){
   const {data:{user}} = await sb.auth.getUser();
   if(!user) return showAuth();
   $('auth').classList.add('hidden'); $('app').classList.remove('hidden');
-  const [cls, cr, pk, hist, prof] = await Promise.all([
+  const [cls, cr, pk, hist, prof, tr] = await Promise.all([
     sb.rpc('classes_with_spots'), sb.rpc('my_credits'),
     sb.from('packages').select('total,expires_at').gt('expires_at', new Date().toISOString()).order('expires_at'),
-    sb.from('bookings').select('id,status,classes(name,starts_at)'),
-    sb.from('profiles').select('name').maybeSingle()
+    sb.from('bookings').select('id,status,is_trial,classes(name,starts_at)'),
+    sb.from('profiles').select('name').maybeSingle(),
+    sb.rpc('trial_available')
   ]);
   if (cls.error) return say('No se pudieron cargar las clases: '+cls.error.message);
   $('hello').textContent = 'Hola, ' + (prof.data?.name || user.email);
   const credits = cr.data ?? 0;
   const classes = cls.data || [];
+  const trial = credits <= 0 && tr.data === true;
 
-  $('v1').innerHTML = `<p class="muted">Te quedan <b>${credits}</b> clases. Puedes cancelar hasta 12 h antes; después, la clase se descuenta.</p>` +
+  $('v1').innerHTML = (trial ? `<div class="card"><b>Tu primera clase es de prueba</b><br><span class="muted">Cuesta $50. Elige un horario y reserva; pagas por transferencia o en efectivo antes de tu clase. Puedes cancelar hasta 12 h antes.</span></div>` : `<p class="muted">Te quedan <b>${credits}</b> clases. Puedes cancelar hasta 12 h antes; después, la clase se descuenta.</p>`) +
     (classes.length ? classes.map(c => {
       const left = c.capacity - c.taken, mine = !!c.my_booking;
       return `<div class="card"><div class="row"><div><b>${esc(c.name)}</b><br><span class="muted">${esc(fmt(c.starts_at))}</span><br>
         <span class="tag">${left>0?left+' lugares':'Llena'}</span></div>
         ${mine ? `<div style="display:grid;gap:6px"><button class="alt" data-cancel="${c.my_booking}" data-start="${c.starts_at}">Cancelar</button><button class="alt" data-ics="${c.id}">Agregar a calendario</button></div>`
-               : `<button data-book="${c.id}" ${left<=0||credits<=0?'disabled':''}>Reservar</button>`}</div></div>`;
+               : `<button data-book="${c.id}" ${trial?'data-trial="1"':''} ${left<=0||(credits<=0&&!trial)?'disabled':''}>${trial?'Reservar clase de prueba':'Reservar'}</button>`}</div></div>`;
     }).join('') : '<p class="muted">Aún no hay clases publicadas.</p>');
 
   const hs = (hist.data||[]).filter(h=>h.classes).sort((a,b)=>new Date(b.classes.starts_at)-new Date(a.classes.starts_at));
   $('v2').innerHTML = `<div class="card"><div class="muted">Clases disponibles</div><div class="big">${credits}</div>
     ${(pk.data||[]).map(p=>`<div class="muted">Paquete de ${p.total} · vence ${esc(new Date(p.expires_at).toLocaleDateString('es-MX',{timeZone:TZ,day:'numeric',month:'long'}))}</div>`).join('') || '<div class="muted">Sin paquete vigente. Escríbele a Ximena por WhatsApp.</div>'}</div>
     <h2>Mis clases</h2>` + (hs.length ? hs.map(h=>`<div class="card"><b>${esc(h.classes.name)}</b><br>
-    <span class="muted">${esc(fmt(h.classes.starts_at))} · ${STATUS[h.status]}</span></div>`).join('') : '<p class="muted">Todavía no tienes clases.</p>');
+    <span class="muted">${esc(fmt(h.classes.starts_at))} · ${STATUS[h.status]}${h.is_trial?' · clase de prueba':''}</span></div>`).join('') : '<p class="muted">Todavía no tienes clases.</p>');
 
   document.querySelectorAll('[data-book]').forEach(b => b.onclick = async () => {
     b.disabled = true;
-    const {error} = await sb.rpc('book_class', {p_class: b.dataset.book});
+    const {error} = await sb.rpc(b.dataset.trial ? 'book_trial' : 'book_class', {p_class: b.dataset.book});
     say(error ? error.message : 'Clase reservada ✓'); start();
   });
   document.querySelectorAll('[data-cancel]').forEach(b => b.onclick = async () => {
