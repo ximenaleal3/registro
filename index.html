@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yoga con Ximena · Estudio en Villa Universitaria</title>
+<meta name="description" content="Yoga en grupos de máximo 6 personas. Vinyasa, Tripsichore y Handstand & Balance Lab. Agenda tu clase de prueba.">
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#efe3d8;--card:#f8f1ea;--terra:#b8715c;--brown:#7a4a33;--olive:#8a8677;--ink:#4a2e20;--cream:#fbf5ee;--line:#d9c6b6}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 'Work Sans',sans-serif}
+h1,h2,h3{font-family:Marcellus,serif;font-weight:400;color:var(--brown);margin:0}
+h2{font-size:clamp(28px,6vw,40px);text-align:center;margin-bottom:8px}
+section{padding:56px 20px;max-width:960px;margin:0 auto}
+.sub{text-align:center;color:var(--olive);margin:0 auto 28px;max-width:560px}
+.btn{display:inline-block;background:var(--terra);color:#fff;font-weight:600;text-decoration:none;padding:14px 26px;border-radius:999px}
+.btn.alt{background:transparent;border:1px solid var(--cream);color:var(--cream)}
+.btn:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--brown);outline-offset:3px}
+nav{position:fixed;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:linear-gradient(rgba(60,35,25,.55),transparent);color:var(--cream)}
+nav b{font-family:Marcellus,serif;font-weight:400;font-size:20px}
+nav a{color:var(--cream);text-decoration:none;font-weight:600;font-size:15px;margin-left:16px}
+.hero{position:relative;height:100svh;min-height:560px;max-width:none;padding:0;display:flex;align-items:flex-end;overflow:hidden;color:var(--cream)}
+.hero video,.hero .shade{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shade{background:linear-gradient(rgba(122,74,51,.35),rgba(60,30,20,.78))}
+.hero .in{position:relative;padding:0 24px 56px;max-width:960px;margin:0 auto;width:100%}
+.hero h1{color:var(--cream);font-size:clamp(46px,12vw,92px);line-height:1.02}
+.hero h1 span{display:block;opacity:0;animation:up 1.2s ease forwards}
+.hero h1 span:nth-child(2){animation-delay:.9s}.hero h1 span:nth-child(3){animation-delay:1.8s}
+.hero p{margin:16px 0 24px;max-width:480px}.hero .cta{opacity:0;animation:up 1s 2.6s ease forwards}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.hero h1 span,.hero .cta{animation:none;opacity:1}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+.chips span,.tag{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px 14px;font-size:14px}
+.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.card img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block}
+.card div{padding:16px}.card p{margin:6px 0 0;font-size:15px}
+.pr{display:grid;grid-template-columns:1fr auto auto;gap:6px 18px;background:var(--olive);color:var(--cream);border-radius:20px;padding:22px;max-width:560px;margin:0 auto}
+.pr s{opacity:.7}.pr b{text-align:right}.pr .h{font-size:13px;opacity:.85;text-align:right}
+.note{text-align:center;font-size:14px;color:var(--olive);margin-top:14px}
+.days{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.day h3{font-size:19px;margin-bottom:6px}.day p{margin:4px 0;font-size:14px}
+.steps{counter-reset:s;display:grid;gap:14px;max-width:560px;margin:0 auto;padding:0;list-style:none}
+.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px 14px 58px;position:relative}
+.steps li:before{content:counter(s);position:absolute;left:16px;top:10px;font:28px Marcellus,serif;color:var(--terra)}
+.about{background:var(--card);border-radius:24px;max-width:700px;border:1px solid var(--line)}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:8px auto;max-width:640px}
+summary{cursor:pointer;font-weight:600}
+footer{text-align:center;padding:36px 20px 56px;color:var(--olive);font-size:14px}
+.band{background:var(--brown);color:var(--cream);text-align:center;border-radius:28px;max-width:900px}
+.band h2{color:var(--cream)}
+</style>
+</head>
+<body>
+<nav><b>Yoga con Ximena</b><div><a href="#experiencias">Clases</a><a href="#precios">Precios</a><a href="reservas.html">Entrar</a></div></nav>
+
+<section class="hero" aria-label="Portada">
+  <video autoplay muted loop playsinline poster="portada-respaldo.jpg"><source src="portada.mp4" type="video/mp4"></video>
+  <div class="shade"></div>
+  <div class="in">
+    <h1><span>Muévete.</span><span>Respira.</span><span>Vuelve a ti.</span></h1>
+    <p>Yoga en grupos de máximo 6 personas, para todos los niveles. Villa Universitaria, Zapopan.</p>
+    <div class="cta"><a class="btn" href="reservas.html">Agenda tu clase de prueba · $50</a> <a class="btn alt" href="#horarios">Ver horarios</a></div>
+  </div>
+</section>
+
+<section>
+  <h2>¿Es para ti?</h2>
+  <p class="sub">Si nunca has practicado, si quieres retomarlo o si buscas un reto, aquí hay un lugar. Grupos pequeños para que te vea y te corrija cada clase. No necesitas experiencia ni ser flexible.</p>
+  <div class="chips"><span>Máx. 6 personas</span><span>Todos los niveles</span><span>Sin inscripción</span><span>Clase de prueba $50</span></div>
+</section>
+
+<section id="experiencias">
+  <h2>Experiencias</h2>
+  <p class="sub">Cuatro formas de practicar. Elige la que más conecte contigo.</p>
+  <div class="grid">
+    <div class="card"><img src="img/slowflow.webp" alt="Ximena en una postura de estiramiento" loading="lazy"><div><h3>Vinyasa Slow Flow</h3><p>Movimiento, respiración y estiramientos para conectar y fluir con tu cuerpo con calma.</p></div></div>
+    <div class="card"><img src="img/power.webp" alt="Ximena en plancha con una pierna elevada" loading="lazy"><div><h3>Vinyasa Power</h3><p>Una práctica dinámica y desafiante para construir fuerza, energía y resistencia.</p></div></div>
+    <div class="card"><img src="img/tripsichore.webp" alt="Ximena en una postura de apertura de pecho" loading="lazy"><div><h3>Tripsichore</h3><p>Movimiento continuo, fuerza y respiración en una práctica intensa que te invita a ir más allá.</p></div></div>
+    <div class="card"><img src="img/handstand.webp" alt="Ximena en una inversión sobre los antebrazos" loading="lazy"><div><h3>Handstand & Balance Lab</h3><p>Explora tu equilibrio a través de inversiones y balances, desarrollando fuerza, técnica y confianza.</p></div></div>
+  </div>
+</section>
+
+<section id="horarios">
+  <h2>Horarios</h2>
+  <p class="sub">Clases de 50 minutos.</p>
+  <div class="days">
+    <div class="day"><h3>Lunes</h3><p>7:00 am · Slow Flow</p><p>8:00 am · Slow Flow</p><p>6:00 pm · Vinyasa Power</p></div>
+    <div class="day"><h3>Martes</h3><p>8:00 am · Handstand & Balance Lab</p><p>9:00 am · Handstand & Balance Lab</p></div>
+    <div class="day"><h3>Miércoles</h3><p>7:00 am · Vinyasa Power</p><p>8:00 am · Vinyasa Power</p></div>
+    <div class="day"><h3>Jueves</h3><p>8:00 am · Tripsichore</p><p>9:00 am · Tripsichore</p></div>
+    <div class="day"><h3>Viernes</h3><p>9:00 am · Vinyasa Power</p></div>
+  </div>
+</section>
+
+<section id="precios">
+  <h2>Precios</h2>
+  <p class="sub">Precio de apertura en tu primer paquete. Después aplica la tarifa regular.</p>
+  <div class="pr">
+    <span></span><span class="h">Regular</span><span class="h">Apertura</span>
+    <span>4 clases</span><s>$600</s><b>$480</b>
+    <span>8 clases</span><s>$999</s><b>$760</b>
+    <span>12 clases</span><s>$1,320</s><b>$1,050</b>
+    <span>Ilimitadas</span><s>$1,700</s><b>$1,500</b>
+    <span>Clase suelta</span><s>$175</s><b>$140</b>
+    <span>Clase de prueba</span><s>$100</s><b>$50</b>
+  </div>
+  <p class="note">Paquetes con vigencia de 4 semanas · Sin inscripción · Promoción válida hasta el 30 de enero de 2027</p>
+</section>
+
+<section class="about">
+  <h2>Sobre mí</h2>
+  <p class="sub" style="max-width:none;text-align:left;color:var(--ink)">Soy Ximena. [AQUÍ VA TU HISTORIA: cuánto llevas practicando y dando clases, qué te llevó a abrir tu propio espacio y cómo es tu forma de enseñar.] Mi estudio es pequeño y está hecho con mucho cariño, para que quien llegue se sienta tranquilo y a gusto.</p>
+</section>
+
+<section>
+  <h2>Cómo funciona</h2><p class="sub">Tu primera vez, paso a paso.</p>
+  <ol class="steps">
+    <li><b>Crea tu cuenta</b> y elige un horario para tu clase de prueba.</li>
+    <li><b>Ven a practicar.</b> Lleva ropa cómoda y agua; el tapete también, si tienes.</li>
+    <li><b>Elige tu paquete</b> y reserva tus clases desde tu perfil.</li>
+  </ol>
+  <p class="note">Puedes cancelar hasta 12 horas antes. Después, la clase se descuenta de tu paquete.</p>
+</section>
+
+<section>
+  <h2>Preguntas frecuentes</h2><p class="sub"></p>
+  <details><summary>¿Necesito experiencia?</summary><p>No. Todos los niveles son bienvenidos y te explico cada postura.</p></details>
+  <details><summary>¿Cómo pago?</summary><p>Por transferencia o en efectivo. Te confirmo los datos al reservar.</p></details>
+  <details><summary>¿Qué pasa si cancelo tarde?</summary><p>Con menos de 12 horas de aviso, la clase se descuenta de tu paquete.</p></details>
+  <details><summary>¿Dónde están?</summary><p>En la colonia Villa Universitaria. Te comparto la dirección exacta al confirmar tu reserva.</p></details>
+</section>
+
+<section class="band">
+  <h2>Nos vemos en el tapete</h2>
+  <p class="sub" style="color:var(--line)">Tu primera clase cuesta $50. Los lugares son pocos.</p>
+  <a class="btn" href="reservas.html">Agenda tu clase de prueba</a>
+  <p style="margin-top:20px"><a style="color:var(--cream)" href="https://wa.me/523335778317">WhatsApp 333 577 8317</a> · <a style="color:var(--cream)" href="https://instagram.com/ximena.lealz">@ximena.lealz</a></p>
+</section>
+
+<footer>Yoga con Ximena · Colonia Villa Universitaria, Zapopan</footer>
+</body>
+</html>
