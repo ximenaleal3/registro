@@ -66,11 +66,8 @@ nav .logo{font:20px Marcellus,serif;margin:0}
   body{font-size:18px}section{max-width:1040px}
   nav,nav.solid{background:var(--brown)}#mb{display:none}
   #links{display:flex;position:static;flex-direction:row;background:none;padding:0}#links a{border:0;padding:0;margin-left:22px}
-  .hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:48px;height:auto;min-height:100vh;max-width:1160px;margin:0 auto;padding:96px 32px 48px;overflow:visible;color:var(--ink)}
-  .hero .shade{display:none}
-  .hero video{position:static;grid-column:2;grid-row:1;justify-self:center;width:auto;height:min(78vh,700px);aspect-ratio:9/16;border-radius:999px 999px 28px 28px;object-fit:cover}
-  .hero .in{grid-column:1;grid-row:1;padding:0;margin:0}
-  .hero h1{color:var(--brown)}.hero .btn.alt{color:var(--brown);border-color:var(--brown)}
+  .hero .in{max-width:1160px;padding:0 32px 64px}.hero h1{font-size:clamp(46px,6vw,80px)}
+  .hero .shade{background:linear-gradient(rgba(60,30,20,.2),rgba(60,30,20,.7))}
   .aviso{grid-template-columns:260px 1fr}.aviso div{padding:22px 22px 22px 0}
   .about{max-width:820px}.txt{font-size:18px}
 }
@@ -82,7 +79,7 @@ nav .logo{font:20px Marcellus,serif;margin:0}
   <div id="links"><a href="#experiencias">Clases</a><a href="#horarios">Horarios</a><a href="#precios">Precios</a><a href="#sobre">Quién soy</a><a href="talleres.html">Talleres</a><a href="#contacto">Contacto</a><a href="reservas.html">Entrar</a></div></nav>
 
 <section class="hero" aria-label="Portada">
-  <video autoplay muted loop playsinline poster="portada-respaldo.jpg"><source src="portada.mp4" type="video/mp4"></video>
+  <video id="hv" autoplay muted loop playsinline poster="portada-respaldo.jpg"></video>
   <div class="shade"></div>
   <div class="in">
     <h1><span>Muévete.</span><span>Respira.</span><span>Vuelve a ti.</span></h1>
@@ -203,6 +200,8 @@ const nav=document.getElementById('nav'),mb=document.getElementById('mb'),lk=doc
 const sc=()=>nav.classList.toggle('solid',scrollY>60||lk.classList.contains('open'));addEventListener('scroll',sc);sc();
 mb.onclick=()=>{const o=lk.classList.toggle('open');mb.setAttribute('aria-expanded',o);sc()};
 lk.addEventListener('click',e=>{if(e.target.tagName==='A'){lk.classList.remove('open');mb.setAttribute('aria-expanded',false);sc()}});
-</script>
+const hv=document.getElementById('hv'),mq=matchMedia('(min-width:900px)');
+function vid(){const d=mq.matches;hv.poster=d?'portada-web-respaldo.jpg':'portada-respaldo.jpg';hv.src=d?'portada-web.mp4':'portada.mp4';hv.play().catch(()=>{})}
+mq.addEventListener('change',vid);vid();</script>
 </body>
 </html>
