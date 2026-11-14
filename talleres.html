@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Talleres y experiencias · Yoga con Ximena</title>
+<link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#efe3d8;--card:#f8f1ea;--terra:#b8715c;--brown:#7a4a33;--olive:#8a8677;--ink:#4a2e20;--cream:#fbf5ee;--line:#d9c6b6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 'Work Sans',sans-serif}
+h1,h2,h3{font-family:Marcellus,serif;font-weight:400;color:var(--brown);margin:0}
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--brown)}
+nav a{color:var(--cream);text-decoration:none;font-weight:600;font-size:15px;margin-left:16px}
+nav a.logo{margin:0;font:20px Marcellus,serif}
+main{max-width:1040px;margin:0 auto;padding:36px 20px 64px}
+.sub{text-align:center;color:var(--olive);max-width:560px;margin:8px auto 28px}
+h1{text-align:center;font-size:clamp(30px,6vw,44px)}
+.grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit;display:block;cursor:pointer}
+.card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.card div{padding:18px}.card h2{font-size:26px;margin:8px 0 4px}.card p{margin:6px 0 12px;font-size:15px}
+.tag{font-size:13px;padding:3px 12px;border-radius:999px;background:var(--line);display:inline-block}
+.more{color:var(--terra);font-weight:600}
+.btn{display:inline-block;background:var(--terra);color:#fff;font-weight:600;text-decoration:none;padding:14px 26px;border-radius:999px}
+.back{color:var(--brown);font-weight:600;text-decoration:none}
+.txt{max-width:660px;margin:0 auto}.txt p{margin:0 0 14px}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:26px auto;max-width:760px}
+.gal img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:14px;display:block}
+.days{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:20px 0}
+.day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.day h3{font-size:19px;margin-bottom:6px}.day p{margin:4px 0;font-size:14px}
+.cta{text-align:center;margin:24px 0}
+a:focus-visible{outline:3px solid var(--brown);outline-offset:3px}
+footer{text-align:center;padding:30px 20px 50px;color:var(--olive);font-size:14px}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="index.html">Yoga con Ximena</a><div><a href="index.html">← Inicio</a><a href="reservas.html">Entrar</a></div></nav>
+<main id="app"></main>
+<footer>Yoga con Ximena · Colonia Villa Universitaria, Zapopan</footer>
+
+<script>
+// Para agregar un taller nuevo, se agrega un bloque más a esta lista.
+const WA = '523335778317';
+const TALLERES = [
+{
+  id: 'lo-que-nos-trajo',
+  titulo: 'Lo que nos trajo hasta aquí',
+  subtitulo: 'Una experiencia privada de fin de año',
+  etiqueta: 'Experiencia de fin de año',
+  fechas: '27 nov 2026 – 16 ene 2027',
+  resumen: 'Una pausa para recordar, compartir, reír y reconocer el camino recorrido, con tu gente.',
+  foto: 'taller4.webp',
+  mensaje: 'Hola Ximena, me interesa la experiencia de fin de año «Lo que nos trajo hasta aquí». Somos ___ personas y nos gustaría apartar fecha. ¿Qué disponibilidad tienes?',
+  fotos: [['taller1.webp','Acuarela de una luna'],['taller2.webp','Dos amigas riendo'],['taller3.webp','Cuaderno con la frase «Lo que me hace feliz»'],['taller4.webp','Vela, flores y piedras sobre fotografías'],['taller5.webp','Manos unidas por un hilo rojo'],['taller6.webp','Fotografía de un paisaje sostenida en la mano'],['taller7.webp','Dibujo de un sol dorado'],['taller8.webp','Florero con flores y eucalipto'],['taller9.webp','Persona escribiendo en su cuaderno']],
+  texto: `<p><i>¿Y si este año, en lugar de hacer una lista de propósitos, nos detenemos a mirar todo lo que vivimos?</i></p>
+  <p>Hay años que no caben en un resumen. Años que nos cambiaron los planes, nos sorprendieron, nos hicieron reír, nos pusieron a prueba o nos acercaron a personas que hoy son parte de nuestra historia.</p>
+  <p>Por eso creé <i>Lo que nos trajo hasta aquí</i>: una experiencia privada que transforma una reunión con tu gente en algo más significativo. Un recorrido por las historias, los recuerdos, las pequeñas victorias y los aprendizajes que dejó el año.</p>
+  <p>A través de distintas estaciones, contaremos nuestra propia versión de lo vivido, descubriremos cómo nos ven los demás, reconoceremos lo que admiramos de nuestra gente y le daremos un lugar a lo que queremos llevarnos al año siguiente. Una experiencia que combina <b>creatividad, reflexión y conexión</b>, con momentos creativos, meditación, sound healing y algunas sorpresas más.</p>
+  <p>No se trata de hacer un balance perfecto del año, sino de descubrir qué significó para cada quien y qué lugar ocupamos en la historia de los demás. Porque cada quien vivió un año diferente, pero nuestras historias también se entrelazan.</p>`,
+  datos: [['Dónde y cuándo','Villa Universitaria, Zapopan.<br>Lunes, sábados y domingos, del 27 de noviembre de 2026 al 16 de enero de 2027, a partir de las 6:00 pm.'],
+          ['Parejas','<b>$777 mxn</b> por persona<br>$1,554 la pareja'],
+          ['Amigos o familia','Mínimo 4 personas, máximo 10.<br><b>$444 mxn</b> por persona (desde $1,776)'],
+          ['Incluye','Guía, materiales, actividades, tea break y kit sorpresa.'],
+          ['Para apartar tu fecha','Se requiere pago anticipado: puedes pagar el total o un mínimo del 50%. El resto se liquida antes de la experiencia.']]
+}
+];
+
+const app = document.getElementById('app');
+function lista(){
+  document.title = 'Talleres y experiencias · Yoga con Ximena';
+  app.innerHTML = `<h1>Talleres y experiencias</h1><p class="sub">Experiencias especiales, fuera de las clases regulares. Toca una para ver todos los detalles.</p>
+  <div class="grid">${TALLERES.map(t => `<a class="card" href="#${t.id}"><img src="${t.foto}" alt="" loading="lazy"><div>
+    <span class="tag">${t.etiqueta}</span><h2>${t.titulo}</h2><span class="tag">${t.fechas}</span><p>${t.resumen}</p><span class="more">Ver más →</span></div></a>`).join('')}</div>`;
+}
+function detalle(t){
+  document.title = t.titulo + ' · Yoga con Ximena';
+  const wa = `https://wa.me/${WA}?text=${encodeURIComponent(t.mensaje)}`;
+  app.innerHTML = `<p><a class="back" href="#">← Todos los talleres</a></p>
+  <h1>${t.titulo}</h1><p class="sub">${t.subtitulo}</p>
+  <div class="txt">${t.texto}</div>
+  <div class="gal">${t.fotos.map(f => `<img src="${f[0]}" alt="${f[1]}" loading="lazy">`).join('')}</div>
+  <div class="days">${t.datos.map(d => `<div class="day"><h3>${d[0]}</h3><p>${d[1]}</p></div>`).join('')}</div>
+  <p class="sub" style="margin-bottom:8px">Mándame mensaje para checar fechas disponibles y reservar la tuya.</p>
+  <p class="cta"><a class="btn" href="${wa}">Apartar mi fecha por WhatsApp</a></p>`;
+}
+function ruta(){
+  const t = TALLERES.find(x => '#' + x.id === location.hash);
+  t ? detalle(t) : lista(); window.scrollTo(0, 0);
+}
+addEventListener('hashchange', ruta); ruta();
+</script>
+</body>
+</html>

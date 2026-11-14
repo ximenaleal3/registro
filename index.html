@@ -53,10 +53,33 @@ footer{text-align:center;padding:36px 20px 56px;color:var(--olive);font-size:14p
 .band h2{color:var(--cream)}
 .list{max-width:600px;margin:0 auto 18px;padding-left:22px}.list li{margin:10px 0}.txt{max-width:640px;margin:0 auto}.txt p{margin:0 0 14px}
 .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:26px 0 34px}.gal img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:14px;display:block}
+
+nav{display:flex;justify-content:space-between;align-items:center;transition:background .3s}
+nav.solid{background:var(--brown)}
+nav .logo{font:20px Marcellus,serif;margin:0}
+#mb{display:block;background:none;border:0;color:var(--cream);font-size:26px;cursor:pointer;padding:0 4px}
+#links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--brown);flex-direction:column;padding:8px 20px 16px}
+#links.open{display:flex}#links a{margin:0;padding:12px 0;border-bottom:1px solid rgba(251,245,238,.2)}
+.aviso{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden;text-decoration:none;color:inherit}
+.aviso img{width:100%;height:100%;min-height:150px;object-fit:cover}.aviso div{padding:14px 14px 14px 0}.aviso h3{font-size:24px;margin:6px 0}.aviso p{margin:0 0 6px;font-size:15px}
+@media(min-width:900px){
+  body{font-size:18px}section{max-width:1040px}
+  nav,nav.solid{background:var(--brown)}#mb{display:none}
+  #links{display:flex;position:static;flex-direction:row;background:none;padding:0}#links a{border:0;padding:0;margin-left:22px}
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:48px;height:auto;min-height:100vh;max-width:1160px;margin:0 auto;padding:96px 32px 48px;overflow:visible;color:var(--ink)}
+  .hero .shade{display:none}
+  .hero video{position:static;grid-column:2;grid-row:1;justify-self:center;width:auto;height:min(78vh,700px);aspect-ratio:9/16;border-radius:999px 999px 28px 28px;object-fit:cover}
+  .hero .in{grid-column:1;grid-row:1;padding:0;margin:0}
+  .hero h1{color:var(--brown)}.hero .btn.alt{color:var(--brown);border-color:var(--brown)}
+  .aviso{grid-template-columns:260px 1fr}.aviso div{padding:22px 22px 22px 0}
+  .about{max-width:820px}.txt{font-size:18px}
+}
 </style>
 </head>
 <body>
-<nav><b>Yoga con Ximena</b><div><a href="#experiencias">Clases</a><a href="#precios">Precios</a><a href="#talleres">Talleres</a><a href="reservas.html">Entrar</a></div></nav>
+<nav id="nav"><a class="logo" href="index.html">Yoga con Ximena</a>
+  <button id="mb" aria-label="Abrir menú" aria-expanded="false">☰</button>
+  <div id="links"><a href="#experiencias">Clases</a><a href="#horarios">Horarios</a><a href="#precios">Precios</a><a href="#sobre">Quién soy</a><a href="talleres.html">Talleres</a><a href="#contacto">Contacto</a><a href="reservas.html">Entrar</a></div></nav>
 
 <section class="hero" aria-label="Portada">
   <video autoplay muted loop playsinline poster="portada-respaldo.jpg"><source src="portada.mp4" type="video/mp4"></video>
@@ -121,7 +144,7 @@ footer{text-align:center;padding:36px 20px 56px;color:var(--olive);font-size:14p
   <p class="note">Paquetes con vigencia de 4 semanas · Sin inscripción · Promoción válida hasta el 30 de enero de 2027</p>
 </section>
 
-<section class="about">
+<section class="about" id="sobre">
   <h2>Hola, soy Ximena</h2>
   <div class="txt">
   <p>Soy instructora de Vinyasa Yoga y nutrióloga. Me gusta explorar el movimiento en sus distintas formas y entender el cuerpo a través de la práctica.</p>
@@ -133,28 +156,11 @@ footer{text-align:center;padding:36px 20px 56px;color:var(--olive);font-size:14p
   </div>
 </section>
 
-<section id="talleres">
-  <h2>Lo que nos trajo hasta aquí</h2>
-  <p class="sub">Una experiencia privada de fin de año</p>
-  <div class="txt">
-  <p><i>¿Y si este año, en lugar de hacer una lista de propósitos, nos detenemos a mirar todo lo que vivimos?</i></p>
-  <p>Hay años que no caben en un resumen. Años que nos cambiaron los planes, nos sorprendieron, nos hicieron reír, nos pusieron a prueba o nos acercaron a personas que hoy son parte de nuestra historia.</p>
-  <p>Por eso creé <i>Lo que nos trajo hasta aquí</i>: una experiencia privada que transforma una reunión con tu gente en algo más significativo. Un recorrido por las historias, los recuerdos, las pequeñas victorias y los aprendizajes que dejó el año.</p>
-  <p>A través de distintas estaciones, contaremos nuestra propia versión de lo vivido, descubriremos cómo nos ven los demás, reconoceremos lo que admiramos de nuestra gente y le daremos un lugar a lo que queremos llevarnos al año siguiente. Una experiencia que combina <b>creatividad, reflexión y conexión</b>, con momentos creativos, meditación, sound healing y algunas sorpresas más.</p>
-  <p>No se trata de hacer un balance perfecto del año, sino de descubrir qué significó para cada quien y qué lugar ocupamos en la historia de los demás. Porque cada quien vivió un año diferente, pero nuestras historias también se entrelazan.</p>
-  </div>
-  <div class="gal"><img src="taller5.webp" alt="Manos unidas por un hilo rojo" loading="lazy"><img src="taller6.webp" alt="Fotografía de un paisaje sostenida en la mano" loading="lazy"><img src="taller9.webp" alt="Persona escribiendo en su cuaderno" loading="lazy"></div>
-  <h2 style="font-size:28px">Tu grupo. Tu experiencia.</h2>
-  <p class="sub">Organízala con tu pareja, amigos, familia o personas especiales. Cupo máximo: 10 personas.</p>
-  <div class="days">
-    <div class="day"><h3>Dónde y cuándo</h3><p>Villa Universitaria, Zapopan.</p><p>Lunes, sábados y domingos, del 27 de noviembre de 2026 al 16 de enero de 2027, a partir de las 6:00 pm.</p></div>
-    <div class="day"><h3>Parejas</h3><p><b>$777 mxn</b> por persona</p><p>$1,554 la pareja</p></div>
-    <div class="day"><h3>Amigos o familia</h3><p>Mínimo 4 personas, máximo 10.</p><p><b>$444 mxn</b> por persona </p></div>
-    <div class="day"><h3>Incluye</h3><p>Guía, materiales, actividades, tea break y kit sorpresa.</p></div>
-    <div class="day"><h3>Para apartar tu fecha</h3><p>Se requiere pago anticipado: puedes pagar el total o un mínimo del 50%. El resto se liquida antes de la experiencia.</p></div>
-  </div>
-  <p class="note">Mándame mensaje para checar fechas disponibles y reservar la tuya.</p>
-  <p style="text-align:center"><a class="btn" href="https://wa.me/523335778317?text=Hola%20Ximena%2C%20me%20interesa%20la%20experiencia%20de%20fin%20de%20a%C3%B1o%20%C2%ABLo%20que%20nos%20trajo%20hasta%20aqu%C3%AD%C2%BB.%20Somos%20___%20personas%20y%20nos%20gustar%C3%ADa%20apartar%20fecha.%20%C2%BFQu%C3%A9%20disponibilidad%20tienes%3F">Apartar mi fecha por WhatsApp</a></p>
+<section>
+  <a class="aviso" href="talleres.html#lo-que-nos-trajo"><img src="taller4.webp" alt="">
+    <div><span class="tag">Experiencia de fin de año</span><h3>Lo que nos trajo hasta aquí</h3>
+    <p>Una experiencia privada para vivir con tu gente. Del 27 de noviembre al 16 de enero.</p><b style="color:var(--terra)">Ver más →</b></div></a>
+  <p class="note"><a href="talleres.html" style="color:var(--brown)">Ver todos los talleres</a></p>
 </section>
 
 <section>
@@ -184,7 +190,7 @@ footer{text-align:center;padding:36px 20px 56px;color:var(--olive);font-size:14p
   <details><summary>¿Puedo practicar si tengo alguna lesión o molestia física?</summary><p>Depende de cada situación. Si tienes una lesión, molestia persistente o alguna condición que pueda afectar tu práctica, es importante que me lo comuniques antes de comenzar y que consultes con tu profesional de salud para saber qué tipo de actividad es adecuada para ti.</p></details>
 </section>
 
-<section class="band">
+<section class="band" id="contacto">
   <h2>Nos vemos en el tapete</h2>
   <p class="sub" style="color:var(--line)">Tu primera clase cuesta $50. Los lugares son pocos.</p>
   <a class="btn" href="reservas.html">Agenda tu clase de prueba</a>
@@ -192,5 +198,11 @@ footer{text-align:center;padding:36px 20px 56px;color:var(--olive);font-size:14p
 </section>
 
 <footer>Yoga con Ximena · Colonia Villa Universitaria, Zapopan</footer>
+<script>
+const nav=document.getElementById('nav'),mb=document.getElementById('mb'),lk=document.getElementById('links');
+const sc=()=>nav.classList.toggle('solid',scrollY>60||lk.classList.contains('open'));addEventListener('scroll',sc);sc();
+mb.onclick=()=>{const o=lk.classList.toggle('open');mb.setAttribute('aria-expanded',o);sc()};
+lk.addEventListener('click',e=>{if(e.target.tagName==='A'){lk.classList.remove('open');mb.setAttribute('aria-expanded',false);sc()}});
+</script>
 </body>
 </html>
